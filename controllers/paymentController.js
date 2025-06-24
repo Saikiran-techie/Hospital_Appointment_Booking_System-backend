@@ -6,7 +6,7 @@ exports.createOrder = async (req, res) => {
 
     try {
         const options = {
-            amount, // amount in paise (₹500 = 50000)
+            amount, // amount in paise (₹200 = 20000)
             currency,
             receipt,
         };

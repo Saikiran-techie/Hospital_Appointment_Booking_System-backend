@@ -9,7 +9,14 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const app = express();
 
 //Middleware
+app.use(cors({
+  origin: ["https://hospital-appointment-booking-system-umber.vercel.app/"],  // replace with your actual deployed frontend URL
+  methods: ["GET", "POST"],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+}));
 app.use(cors());
+
 app.use(bodyParser.json());
 
 
