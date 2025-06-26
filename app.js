@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -8,27 +7,24 @@ const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
-//Middleware
+// ✅ Proper CORS config middleware — remove duplicate
 app.use(cors({
-  origin: ["https://hospital-appointment-booking-system-umber.vercel.app/"],  // replace with your actual deployed frontend URL
+  origin: "https://hospital-appointment-booking-system-umber.vercel.app",  // no trailing slash here
   methods: ["GET", "POST"],
   allowedHeaders: ['Content-Type'],
   credentials: true
 }));
-app.use(cors());
 
+// ✅ Body parser middleware
 app.use(bodyParser.json());
 
-
+// ✅ Payment route
 app.use("/api", paymentRoutes);
 
-
-//Routes
+// ✅ Default route
 app.get('/', (req, res) => {
   res.send('Welcome to the Hospital Management System API!');
 });
 
-//Later: Import routes here
-
+// ✅ Export app
 module.exports = app;
-

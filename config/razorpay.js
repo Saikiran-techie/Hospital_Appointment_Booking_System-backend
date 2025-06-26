@@ -1,5 +1,9 @@
-
 const Razorpay = require("razorpay");
+
+// ✅ Ensure environment variables exist
+if (!process.env.RP_KEY_ID || !process.env.RP_KEY_SECRET) {
+    throw new Error("Missing Razorpay credentials in environment variables.");
+}
 
 const razorpayInstance = new Razorpay({
     key_id: process.env.RP_KEY_ID,
@@ -7,5 +11,5 @@ const razorpayInstance = new Razorpay({
 });
 
 module.exports = razorpayInstance;
-// This module exports the Razorpay instance configured with the key ID and secret from environment variables.
-// This allows other parts of the application to use Razorpay functionalities like creating orders, processing payments, etc.
+
+// ✅ Razorpay instance with secure key and secret from .env
