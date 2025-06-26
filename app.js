@@ -7,24 +7,36 @@ const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
-// ✅ Proper CORS config middleware — remove duplicate
+// ✅ CORS Config — allow localhost + vercel in development
+const allowedOrigins = [
+  "http://localhost:3000", // local development
+  "https://hospital-appointment-booking-system-umber.vercel.app" // production frontend
+];
+
 app.use(cors({
-  origin: "https://hospital-appointment-booking-system-umber.vercel.app",  // no trailing slash here
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like curl or Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('CORS policy violation — Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "POST"],
   allowedHeaders: ['Content-Type'],
   credentials: true
 }));
 
-// ✅ Body parser middleware
 app.use(bodyParser.json());
 
-// ✅ Payment route
+// ✅ Routes
 app.use("/api", paymentRoutes);
 
-// ✅ Default route
+// ✅ Health check route
 app.get('/', (req, res) => {
   res.send('Welcome to the Hospital Management System API!');
 });
 
-// ✅ Export app
+// Export app
 module.exports = app;
